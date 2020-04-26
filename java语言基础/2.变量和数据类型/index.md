@@ -60,23 +60,20 @@
     + 代码实现
         ```
             import java.util.*;
-            public class HelloWorld {
+            public class test {
                 
-            public static void main(String[] args) {
-                
-                int data = 45;
-                List<Integer> list = new ArrayList<>();
-                while(data/2 != 0) {
-                    list.add(data%2);
-                    data = data/2;
-                }
-                list.add(data%2);
-                int[] arr = new int[list.size()];
-                for(int i = 0;i<arr.length;i++) {
-                    arr[i] = list.get(list.size()-1-i);
-                }
-                System.out.println(Arrays.toString(arr));
-            }   
+                public static void main(String[] args) {
+                    
+                    int data = 45;
+                    Deque<Integer> stack = new LinkedList<>();
+                    while(data > 0) {
+                        stack.push(data%2);
+                        data = data/2;
+                    }
+                    while(!stack.isEmpty()) {
+                        System.out.print(stack.pop());
+                    }
+                }   
             }
         ```
 + 拆分法
