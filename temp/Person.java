@@ -1,22 +1,26 @@
 package temp;
 
+import java.util.*;
 public class Person {
 
-    String name;
+    private int id;
 
-    int age;
+    private String name;
 
-    Person(String name,int age) {
-        this.name = name;
-        this.age = age;
+    public void setId(int id) {
+        if(id > 0) this.id = id;
+        else System.out.println("this id is invalid!");
     }
 
-    public static void main(String[] args) {
+    public int getId() {
+        return id;
+    }
 
-        // 声明person类型引用，指向person类型对象
-        Person person = new Person("华纱不揭",21);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        // 打印对象属性默认值
-        System.out.println("我是" + person.name + "今年" + person.age);
-   }
+    public String getName() {
+        return name;
+    }
 }
