@@ -5,3 +5,6 @@
 + 当某个引用类型变量为null时无法对对象实施访问，此时如果通过引用访问成员变量或调用方法会产生NullPointerException
 #### 算术异常
 #### 数组下标越界
+
+#### 数据类型转换异常
++ classCastException

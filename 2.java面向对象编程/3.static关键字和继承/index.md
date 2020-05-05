@@ -140,13 +140,134 @@
 + 父方法的访问权限必须比子方法大或者相同
 + 要求方法不能抛出更大的异常
 #### Animal类的实现
++ 案例
+    + Animal类的封装，特征：名字和毛色，提供打印所有特征的方法
+        ```
+            public class Animal {
 
+                private String name;
+
+                private String color;
+
+                public Animal() {};
+
+                public Animal(String name,String color) {
+                    setName(name);
+                    setColor(color);
+                }
+
+                public void setName(String name) {
+                    this.name = name;
+                }
+
+                public void setColor(String color) {
+                    this.color = color;
+                }
+
+                public String getName() {
+                    return name;
+                }
+
+                public String getColor() {
+                    return color;
+                }
+
+                public void show () {
+                    System.out.println("该动物名为："+name+" 毛色：" + color);
+                }
+            }
+        ```
 #### Dog和DogTest的实现
++ 封装Dog类继承Animal类，特征：牙齿数量，提供打印所有特征的方法
+    ```
+        public class Dog extends Animal{
 
+            private int num;
+
+            public Dog () {};
+
+            public Dog(String name, String color, int num) {
+                super(name,color);
+                setNum(num);
+            }
+
+            public void setNum(int num) {
+                this.num = num;
+            }
+
+            public int num() {
+                return num;
+            }
+
+            @Override
+            public void show() {
+                super.show();
+                System.out.println("牙齿数量为："+ num);
+            }
+        }
+    ```
++ 实现DogTest类，在main方法中使用无参构造函数和有参方法构造Dog类对象并打印
+    ```
+        public class DogTest {
+
+            public static void main(String[] args) {
+
+                Dog dog1 = new Dog();
+                dog1.show();
+                Dog dog2 = new Dog("luna","blue",18);
+                dog2.show();
+            }
+        }
+    ```
 #### 构造块和静态代码块的考点
-
++ 当父类和子类中都有构造块，静态代码块和构造块时，执行顺序
+    + 父类先于子类加载（子类需要继承父类的特征所以必须让父类先加载），所以执行顺序如下
+        + 父类静态代码块，父类构造块，父类构造方法体，子类静态代码块，子类构造块，子类构造方法体
 #### 权限修饰符和包的定义
-
++ 常用访问控制符
+    ```
+        --------------------------------------------
+        | 修饰符     | 本类 | 同包类 | 子类 | 其他类  |
+        | public    | 允许 | 允许   | 允许 | 允许    |
+        | protected | 允许 | 允许   | 允许 | 不允许  |
+        | 默认       | 允许 | 允许  | 不允许 | 不允许 |
+        | private   | 允许 | 不允许 | 不允许 | 不允许 |
+        ---------------------------------------------
+    ```
++ package由来
+    + 定义类时需要指定类的名称，但是如果仅仅将类名作为唯一标识，不可避免的会出现明明冲突问题，这会给组件复用以及团队间的合作造成很大麻烦，所以package被用来解决命名问题
++ package定义格式
+    + package 包名;
+    + package 包名.包名.包名...包名;
++ package也可以实现项目管理，解决命名冲突以及权限控制问题的效果
++ 定义包的规范
+    + 组织信息.项目名.模块信息.类名
+    + org.apache.commons.lang.StringUtil
++ import
+    + 引入包
+    + 引入静态成员(java5以后)
+        ```
+            import static java.lang.System.out;
+        ```
 #### final修饰类的方法和作用
++ 基本概念
+    + final本意为“最终的，不可改变的”，可以修饰类，成员变量以及成员方法
++ 使用方式
+    + final关键字修饰该类表示该类不能被继承--防止类被烂继承
+    + final关键字修饰成员方法表示该类不能被重写，但是可以被继承
+    + final关键字修饰成员变量表示该变量必须被初始化且不能被修改
+        + 初始化操作可以在类中完成
+            ```
+                public class Test{
+                    private final int cnt;
 
+                    // { cnt = 2; }
+
+                    public Test {
+                        cnt = 2;
+                    }
+                }
+            ```
 #### final修饰成员变量的作用
++ 常量概念
+    + 开发中很少使用final单独修饰成员变量，通常使用public static final关键字共同修饰成员变量来表达常量的含义，常量的命名规范要求是所有字母都大写，不同单词下划线连接
