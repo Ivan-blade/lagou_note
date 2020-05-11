@@ -5,22 +5,23 @@
     + 数组是相同数据类型多个元素的容器，元素按线性顺序排列，在java语言中体现为一种引用数据类型
 #### 一维数组的声明方式
 + 语法
-    ```
+    ```java
         数据类型[] 数组名称 = new 数据类型[数组长度]
     ```
 + 数组通过length获取长度，通过下标访问元素，下标0 —— n-1
 #### 一维数组的使用
 + 案例
-    ```
+    ```java
         int arr1[] = new arr[2]; // 不推荐这种方式
         // int arr = 2;
         int[] arr2 = new arr[2]; // 推荐这种方式因为在结构上更容易和变量区分
     ```
 #### 一维数组的初始化
 + 初始值
+    
     + 基本类型的数组创建后，元素初始值byte,short,char,int,long为0,float,double为0.0,boolean为false
 + 可以在声明数组的同时初始化
-    ```
+    ```java
         数据类型[] 数组名称 = new 数据类型[] {变量1，变量2...}
         // 下面是简化版
         数据类型[] 数组名称 = {变量1，变量2...}
@@ -40,14 +41,14 @@
 #### 一维数组增删查改之声明和赋值操作
 + 题目
     + 声明一个长度为5，元素类型为int的一维数组，打印所有元素
-        ```
+        ```java
             int[] arr = new int[5];
             for(int i = 0; i < arr.length;i++) {
                 System.out.println(arr[i]);
             }
         ```
     + 将11,22,33,44赋值给数组前四个元素并打印
-        ```
+        ```java
             arr[0] = 11;
             arr[1] = 22;
             arr[2] = 33;
@@ -56,11 +57,10 @@
                 System.out.println(arr[i]);
             }
         ```
-    + 
 #### 一维数组之插入操作
 + 题目
     + 将55插入下标0的位置，，并打印数组
-        ```
+        ```java
             for(int i = arr.length-1;i>0;i--) {
                 arr[i] = arr[i-1];
             }
@@ -72,7 +72,7 @@
 #### 一维数组之删除操作
 + 题目
     + 将元素55从数组中删除，删除方式为后续元素前移，最后位置为0，并打印数组
-        ```
+        ```java
             for(int i = 0;i<arr.length-1;i++) {
                 arr[i] = arr[i+1];
             }
@@ -84,7 +84,7 @@
 #### 一维数组之查改操作
 + 题目
     + 查询数值中是否存在元素22，若存在修改为220再打印
-        ```
+        ```java
             for(int i = 0;i<arr.length;i++) {
                 if(22 == arr[i]) arr[i] = 220;
             }
@@ -107,7 +107,7 @@
     + 声明一个长度为3元素类型为int的一维数组并打印所有元素
     + 实现将第一个数组中间三个元素赋值到第二个数组中
     + 再次打印第二个元素中所有的元素
-        ```
+        ```java
             int[] arr1 = new int[] {11,22,33,44,55};
             int[] arr2 = new int[3];
             int index = arr1.length/2-1;
@@ -118,12 +118,12 @@
         ```
 #### 一维数组之间元素的拷贝优化
 + 使用java官网提供的方法
-    ```
+    ```java
         System.arraycopy(arr1,index,arr2,0,3);
     ```
 #### 一维数组之间拷贝的笔试考点
 + 数组之间赋值
-    ```
+    ```java
         int[] arr = new int[3];
         int[] brr = new int[5];
         brr = arr;
@@ -132,7 +132,7 @@
     ```
 #### 一维数组统计数字次数原理分析及编码实现
 + 统计用户输入任意一个正整数中每个数字出现次数的统计并打印
-    ```
+    ```java
         int[] arr = new int[10];
         int data = 123123;
         while(data > 0) {
@@ -149,7 +149,7 @@
 #### 数组实现学生成绩的录入和打印
 + 题目
     + 提示输入学生的人数以及学生的考试成绩
-        ```
+        ```java
             Scanner input = new Scanner(System.in);
             System.out.println("please input the num of student: ");
             int num = input.nextInt();
@@ -163,7 +163,7 @@
 #### 数组实现学生成绩总分和平均分计算
 + 题目
     + 计算该班级的总分和平均分并打印
-        ```
+        ```java
             int sum = 0;
             int aver = 0;
             for(int i = 0;i < num;i++) {
@@ -177,7 +177,7 @@
     + 声明一个值为10,20,30,40,50的一维数组
     + 使用原始方式打印数组，所有元素要求格式 [10, 20, 30, 40, 50]（一数字一空格）
     + 使用工具类完成同样格式打印
-    ```
+    ```java
         int[] arr = new int[] {10,20,30,40,50};
         ---------------------------------------
         System.out.print("[")
@@ -197,20 +197,20 @@
         + 找到返回下标，找不到返回-1
 #### 数组工具类实现元素填充和比较
 + 上述方法示例
-    ```
+    ```java
         // fill
         int[] arr = new int[5];
         Arrays.fill(arr,-1);
-        System.out.println(Arrays.toString(arr)); 
+        System.out.println(Arrays.toString(arr));		// [-1,-1,-1,-1,-1]
 
         // equals
         int[] arr1 = new int[5];
         Arrays.fill(arr1,-1);
-        System.out.println(Arrays.equals(arr,arr1)); 
+        System.out.println(Arrays.equals(arr,arr1)); 	// true
     ```
 #### 数组工具类实现元素排序和查找
 + 上述方法示例
-    ```
+    ```java
         int[] arr = new int[] {12,11,24,51,23};
         System.out.println(Arrays.toString(arr));
 
@@ -228,7 +228,7 @@
     + arr[0].length 代表二维数组列数
 #### 二维数组的声明和使用
 + 二维数组示例
-    ```
+    ```java
         int[][] arr = new int[2][2];
         for(int i = 0;i < arr.length;i++) {
             System.out.println(Arrays.toString(arr[i]));
@@ -236,12 +236,12 @@
     ```
 #### 二维数组的初始化和考点
 + 示例
-    ```
+    ```java
         // 初始化
         int[][] arr = new int[][] {{1,2,3},{4,5,6},{7,8,9}};
     ```
 + 考点
-    ```
+    ```java
         int[][] arr = new int[3][];
         // 表示声明三行不知道多少列的数组
         arr[0] = new int[3];
@@ -258,7 +258,7 @@
 + 题目
     + 根据用户输入的行数输出杨辉三角形
     <img src = "../../images/yanghui.png">
-    ```
+    ```java
         import java.util.*;
         public class test {
             

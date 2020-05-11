@@ -1,7 +1,7 @@
 ### 流程控制语句
 #### if概念及使用
 + if分支结构
-    ```
+    ```java
         if(条件表达式) {
             语句块
         }
@@ -11,7 +11,7 @@
 #### if查找最大值
 + 案例
     + 输入两个整数输出最大的
-        ```
+        ```java
             import java.util.*;
             public class test {
                 
@@ -40,7 +40,7 @@
         ```
 #### if-else概念及使用
 + 结构
-    ```
+    ```java
         if(条件表达式) {
             语句块1
         } else {
@@ -50,7 +50,7 @@
         // 表达式不成立，执行语句块2
     ```
 #### if-else判断正负
-```
+```java
     int num = 3;
     if(num < 0) {
         System.out.println(num+"是负数");
@@ -64,7 +64,7 @@
 ```
 #### if-elseif-else概念及使用
 + 语法结构
-    ```
+    ```java
         if(条件表达式1) {
             语句块1
         } else if(条件表达式2) {
@@ -78,7 +78,7 @@
         // 表达式2不成立，执行语句块3并结束
     ```
 #### 个人所得税计算
-```
+```java
     import java.util.*;
     public class test {
         
@@ -106,7 +106,7 @@
     }
 ```
 #### 出租车计费系统
-```
+```java
     import java.util.*;
     public class test {
         
@@ -130,7 +130,7 @@
     }
 ```
 #### if实现等级判断
-```
+```java
     import java.util.*;
     public class test {
         
@@ -156,7 +156,7 @@
 ```
 #### switchcase概念
 + 结构
-    ```
+    ```java
         switch(变量/表达式) {
             case 字面值1:语句块1;break;
             case 字面值2:语句块2;break;
@@ -166,6 +166,7 @@
         }
     ```
 + 注意case穿透
+    
     + 当语句块执行之后没有break时会发生case穿透，即使变量不满足case要求依然会执行下一个语句块
 + 支持变量类型
     + 最开始
@@ -175,7 +176,7 @@
     + jdk 1.7新增
         + String
 #### switchcase实现等级判断
-```
+```java
     import java.util.*;
     public class test {
         
@@ -196,13 +197,13 @@
 ```
 #### for循环概念和使用
 + 结构
-    ```
+    ```java
         for(初始化表达式;条件表达式;修改初始值表达式) {
             循环体
         }
     ```
 #### for循环三种方式打印奇数
-```
+```java
     for(int i = 1; i <= 100; i++) {
         if(i % 2 == 1) {
             System.out.println(i);
@@ -216,7 +217,7 @@
     }
 ```
 #### for循环实现累加和
-```
+```java
     int sum = 0;
     for(int i = 1;i <= 10000;i++) {
         sum += i;
@@ -228,7 +229,7 @@
     + 使用for循环打印三位数中的水仙花数
     + 水仙花数即一个整数满足其值等于各个数位的立方和
     + 153 = 1^3+5^3+3^3
-    ```
+    ```java
         import java.util.*;
         public class test {
             
@@ -248,7 +249,7 @@
 #### continue关键字
 + 题目
     + 打印1-20所有整数跳过5的倍数
-        ```
+        ```java
             for(int i = 1;i < 21;i++) {
                 if(0 == i % 5) {
                     continue;
@@ -259,7 +260,7 @@
 #### break模拟聊天
 + 题目
     + 允许用户不断输入内容直到用户输入bye
-        ```
+        ```java
             import java.util.*;
             public class test {
                 
@@ -280,7 +281,7 @@
 #### 猜数字游戏实现
 + 题目
     + 随机生成数字n(1-100),根据用户输入的数字判断大了还是小了，猜对就结束游戏
-    ```
+    ```java
         import java.util.*;
         public class test {
             
@@ -304,7 +305,7 @@
     ```
 #### 双重for循环
 + 结构
-    ```
+    ```java
         for(初始化表达式1;条件表达式2;修改初始化表达式3) {
             for(初始化表达式4;条件表达式5;修改初始化表达式6) {
                 循环体;
@@ -313,7 +314,7 @@
     ```
 + break
     + 双重for循环直接break只能跳出内层循环不能完全终止，需要使用标号才能推出多层循环(标号名随便)
-    ```
+    ```java
         outer:for(;;) {
             for(;;) {
                 break outer;
@@ -324,7 +325,7 @@
 + 题目
     + 打印下面的各种星星
         <img src = "../../images/star.png">
-        ```
+        ```java
             import java.util.*;
             public class test {
                 
@@ -365,7 +366,7 @@
 + 题目
     + 打印九九乘法表
         <img src="../../images/sheet1.png">
-        ```
+        ```java
             for(int i = 1;i <= 9;i++) {
                 for(int j = 1;j <= i;j++) {
                     System.out.print(i+"*"+j+"="+i*j+" ");
@@ -374,7 +375,7 @@
             }
         ```
     + 当打印6*6结束后终止循环
-        ```
+        ```java
             outer:for(int i = 1;i <= 9;i++) {
                 for(int j = 1;j <= i;j++) {
                     System.out.print(i+"*"+j+"="+i*j+" ");
@@ -387,7 +388,7 @@
 + 题目
     + 打印2-100之间所有素数
     + 当一个数只能被1和她本身整除时，叫素数
-        ```
+        ```java
             for(int i = 2;i <= 200;i++) {
             boolean flag = true;
             // for(int j = 2;j < i;j++) {
@@ -402,10 +403,11 @@
             }
         ```
     + 为什么循环到平方根就可以停止
+        
         + 因为如果是一个合数，必然有一对因数是成对出现的，一个比平方根大一个比平方根小，所以如果到平方根之前都没有找到那对因数，平方根之后也不会找到
 #### while循环概念和使用
 + 语法格式
-    ```
+    ```java
         while(条件表达式) {
             循环体
         }
@@ -415,7 +417,7 @@
 + 题目
     + 使用while循环计算调和数列累加和并打印
     + 1/1+1/2+1/4+···+1/n
-        ```
+        ```java
             int n = 1;
             double sum = 0;
             while(n < 10) {
@@ -432,7 +434,7 @@
 + while(true)和for(;;)都表示无限循环
 #### while实现反向输出
 + 提示用户输入一个正整数，然后反向输出
-    ```
+    ```java
         import java.util.*;
         public class test {
             
@@ -446,7 +448,7 @@
             }
         }
     ```
-    ```
+    ```java
         import java.util.*;
         public class test {
             
@@ -466,17 +468,18 @@
     ```
 #### dowhile概念和使用
 + 语法
-    ```
+    ```java
         do{
             循环体;
         } while (条件表达式);
     ```
 + dowhile和while循环的区别
+    
     + 条件表达式不成立的情况下dowhile至少执行一次循环
 #### dowhile模拟任务检查
 + 题目
     + 模拟学习任务是否合格的检查，如果合格则停止，否则重新完成任务
-        ```
+        ```java
             import java.util.*;
             public class test {
                 
@@ -494,7 +497,7 @@
         ```
 #### 循环笔试考点
 + 十动然拒（十分感动然后拒绝？？？）
-    ```
+    ```java
         int i = 1;
         while(i < 10000); {
             System.out.println("I LOVE YOU");
@@ -513,7 +516,7 @@
         }
     ```
 + while结构
-    ```
+    ```java
         while(表达式) {
             循环体
         } {

@@ -1,9 +1,10 @@
 ### 多态和特殊类
 #### 多态的概念和语法格式
 + 多态的概念
-    + 同一种事务的多种形态
+    
+    + 同一种事物的多种形态
 + 多态的语法格式
-    ```
+    ```java
         父类类型 引用变量名 = new 子类类型();
 
         Shape s = new Rect();
@@ -11,7 +12,7 @@
     ```
 + 案例（详细见task09）
     + 编程实现Shape类的封装，特征：横纵坐标，要求提供打印所有特征的方法
-        ```
+        ```java
             public class Shape {
 
                 private int x;
@@ -49,7 +50,7 @@
 
         ```
     + 编程实现Rect类的封装并继承自Shape类，特征有：长度和宽度
-        ```
+        ```java
             public class Rect extends Shape{
 
                 int length;
@@ -90,7 +91,7 @@
 
         ```
     + 编程实现ShapeRectTest类，在main方法中分别创建Shape和Rect类型对象并打印特征
-        ```
+        ```java
             public class TestMain {
 
                 public static void main(String[] args) {
@@ -135,18 +136,18 @@
     + 自动转小转大（子类转父类），强转大转小（父类转子类，也叫显式类型转换）
     + 引用数据类型之间的转换必须发生在父子之间否则会报错
     + 如果强制转换的目标类型并不是该引用真正指向的数据类型时则编译通过，运行阶段发生类型转换异常
-        ```
-            Circle c = new (Circle) re; 
+        ```java
+            Circle c = (Circle) re; 
             // 会报错，因为re本身指向rect方向
         ```
     + 为了避免上述错误的发生，应该在强转之前进行判断，格式如下
-        ```
+        ```java
             if(引用变量 instanceof 数据类型)
             // 判断引用变量指向的对象是否为后面的数据类型
         ```
 #### 多态的实际意义
 + 通过参数传递形成多态
-    ```
+    ```java
     public class TestBack {
 
         // 自定义成员成员方法，打印矩形特征
@@ -168,7 +169,7 @@
 
     ```
 + 直接在方法中使用抽象类的引用指向子类类型的对象
-    ```
+    ```java
         Abstract ab = new SubAbstract(); // SubAbstract类继承了Abstract类
         sb.show();
         // 此处调用的show方法是在SubAbstract中实现的
@@ -177,11 +178,12 @@
 #### 抽象方法和抽象类的概念
 + 概念
     + 抽象方法主要指不能具体实现的方法并且使用abstract关键字修饰，也就是没有方法体
-    + 抽象类主要指不能具体实现的方法并且使用abstract关键字修饰，也就是不能创建对象
+    + 抽象类主要指不能具体实现的类并且使用abstract关键字修饰，也就是不能创建对象
 + 注意
+    
     + 抽象类不能new对象，因为不让开发者调用方法体，因为方法体未被定义，调用没有意义
 + 结构
-    ```
+    ```java
         访问权限 abstract 返回值类型 方法名(形参列表)
     ```
 + 抽象类和抽象方法的联系
@@ -216,7 +218,7 @@
     + 接口中的方法默认是public abstract修饰，不用额外添加访问控制字符串(以下代码省略这部分内容，不过建议实际开发时加上增加可读性)
 #### 接口意义
 + 一个类可以继承多个接口
-    ```
+    ```java
         public class Gold implements Metal, Money{
             ...
         }
@@ -224,21 +226,21 @@
 #### 类和接口的关系
 + 案例
     + 编程实现runner接口，提供一个描述奔跑的抽象方法
-        ``` 
+        ``` java
             public interface Runner {
 
                 void run();
             }
         ```
     + 编程实现hunter接口继承runner接口，提供一个描述捕猎行为的抽象方法
-        ```
+        ```java
             public interface Hunter extends Runner{
 
                 void hunt();
             }
         ```
     + 编程实现man类实现hunter接口重写抽象方法，在main方法中使用多态方式测试
-        ```
+        ```java
             public class Man implements Hunter{
 
                 @Override
@@ -266,13 +268,13 @@
 + 主要区别
     + 定义抽象类的关键字是abstract class定义接口的关键字是interface
     + 继承抽象类的关键字是extends，实现接口类的关键字是implements
-    + 继承抽象类支持单继承，而实现接口支持多继承
+    + 继承抽象类支持单继承，而实现接口支持多实现
     + 抽象类中可以有构造方法，但是接口中没有构造方法
-    + 抽象类中只有成员变量但是接口中只有常量
+    + 抽象类中可以有成员变量但是接口中只有常量
     + 抽象类中可以有成员方法但是在接口只能有抽象方法
     + 抽象类中增加方法时子类不需要重写但是接口中增加方法时实现类需要重写（java8以前的版本）
     + java8新特性，接口中允许出现非抽象方法和静态方法，但是非抽象方法需要使用default关键字修饰
-        ```
+        ```java
             public interface Hunter extends Runner{
 
                 void hunt();

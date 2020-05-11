@@ -1,7 +1,7 @@
 ### 方法和封装
 #### 构造方法的概念和使用
 + 结构
-    ```
+    ```java
         class 类名 {
             类名（形参列表） {
                 构造方法体;
@@ -13,7 +13,7 @@
     + 若类中出现了构造方法，则编译器不再提供任何形式的构造方法
 #### 构造方法的作用
 + 案例
-    ```
+    ```java
         public class Person {
 
             String name;
@@ -36,14 +36,16 @@
         }
     ```
 + 描述
+  
     + 使用new关键字创建对象时会自动调用构造方法实现成员变量初始化工作
 #### Point类的定义
 + 同上
 #### 重载的概念和体现形式
 + 概念
+  
     + 方法名称相同参数列表不同这样的方法之间构成重载关系
 + 示例
-    ```
+    ```java
         public class Test {
 
             void show() {
@@ -72,7 +74,7 @@
 + 基本概念
     + 若在构造函数中出现this关键字，代表当前正在构造的对象
     + 若在成员函数中出现this关键字，代表当前正在调用的对象
-        ```
+        ```java
             public class Test {
 
                 Test() {
@@ -95,7 +97,7 @@
 #### this关键字的使用方式
 + 使用方式一
     + 当局部变量与成员变量重名时，如果想要使用成员变量需要在成员变量前加上this
-    ```
+    ```java
         Person(String name,int age) {
             this.name = name;
             this.age = age;
@@ -103,12 +105,13 @@
     ```
 + 使用方式二
     + this除了可以调用成员变量和成员方法外还可以作为方法的返回值
-        ```
+        ```java
             Person getPerson() {
                 return this;
             }
         ```
 + 使用方式三
+  
     + 构造函数中第一行this(),可以调用其他构造函数
 #### 引用变量的注意事项
 + 引用变量必须指向一个地址（值不为null），否则会报空指针异常
@@ -117,7 +120,7 @@
 #### 阶乘的计算方式
 + 循环(递推)
 + 递归
-    ```
+    ```java
         public int fun(int n) {
             if(1 == n) return 1;
             return n*fun(n-1);
@@ -129,7 +132,7 @@
 + 若递归影响到性能则用递推取代
 #### 费氏数列递归实现
 + 递归
-    ```
+    ```java
         public class Test {
 
             public static void main(String[] args) {
@@ -145,7 +148,7 @@
         // 反应会很慢
     ```
 + 递推
-    ```
+    ```java
         public static void main(String[] args) {
             System.out.println(fun1(4));
         }
@@ -165,7 +168,7 @@
 + 描述
     + 在主函数中创建需要的功能类的对象，然后通过该对象去调用该功能类下的方法
     + 比如想要调用Fun类下的fun1方法，在主函数中写下
-        ```
+        ```java
             Fun f = new Fun();
             f.fun1();
         ```
@@ -178,7 +181,7 @@
     + 提供公有的get和set方法，并且在方法体内进行合理值的判断
     + 在构造方法中调用set方法进行合理值判断
 + 示例
-    ```
+    ```java
         private int id;
         private String name;
         public Student() {};
@@ -200,7 +203,7 @@
 + 案例
     + 提示用户输入班级的学生人数以及美国学生的信息（学号姓名）并打印
     + 学生类person 
-        ```
+        ```java
             public class Person {
 
                 private int id;
@@ -226,7 +229,7 @@
             }
         ```
     + 主函数
-        ```
+        ```java
             import java.util.*;
             public class Test {
 
@@ -258,6 +261,7 @@
         ```
 + javaBean概念
     + javaBean是一种Java语言写成的组件，其他Java类可以通过反射机制和操作这些JavaBean的属性
+    + <a href="https://blog.csdn.net/ju_362204801/article/details/90578678">反射机制</a>
     + JavaBean就是符合以下标准的Java类
         + 类是公共的
         + 有一个无参构造函数

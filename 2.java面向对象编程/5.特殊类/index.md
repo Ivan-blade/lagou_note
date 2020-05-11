@@ -16,7 +16,7 @@
         + 没有名字的内部类
 #### 普通内部类的定义
 + 格式
-    ```
+    ```java
         访问修饰符 class 外部类名 {
             访问修饰符 class 内部类名 {
                 内部类的类体；
@@ -25,7 +25,7 @@
     ```
 #### 普通内部类的实验方式
 + 实现
-    ```
+    ```java
 
         // test1.java
         public class Test1 {
@@ -51,7 +51,7 @@
     + 普通内部类使用和普通类类似
     + 普通内部类需要外部类对象来创建对象
     + 如果内部类访问外部类中与本类内部同名的变量需要使用this指针
-        ```
+        ```java
             public class Test1 {
 
             private int cnt = 1;
@@ -67,14 +67,12 @@
                     System.out.println("cnt = " + this.cnt); //打印内部cnt
                     System.out.println("cnt = " + Test1.this.cnt); //打印外部cnt--类名.this获取该类的this指针
                 }
-
-
             }
         }
         ```
 #### 静态内部类的定义和使用方法
 + 结构
-    ```
+    ```java
         访问修饰符 class 外部类名 {
             访问修饰符 static class 内部类名 {
                 内部类的类体；
@@ -82,7 +80,7 @@
         }
     ```
 + 使用
-    ```
+    ```java
         // test1.java
         public class Test1 {
 
@@ -120,7 +118,7 @@
     + 如果静态内部类需要访问外部与内部重名的变量是需要使用了类名.的方式访问（当然访问内部类参数this指针可以，但是this指针是指向正在构建的对象或者正在调用的对象，static修饰的是类层级不推荐使用this指针）
 #### 局部内部类的定义和使用方式
 + 结构
-    ```
+    ```java
         访问控制符 class 外部类的类名 {
             访问控制符 返回值类型 成员方法名（形参列表） {
                 class 内部类的类名 {
@@ -130,7 +128,7 @@
         }
     ```
 + 示例
-    ```
+    ```java
         // Test1.java
         public class Test1 {
 
@@ -146,15 +144,16 @@
 
                     public void test() {
                         System.out.println(ia+cnt); // 3
+                        // i = 4;	j加上这一行会报错
                         System.out.println(i); // 不会报错因为java8开始如果输出一个值系统会认为该变量被final修饰，但是如果对i进行一次赋值，系统则会认为这不是final修饰的变量，会报错，所以请加上final
                     }
-                }
-
+            }
+    
                 Test2 t = new Test2();
                 t.test();
             }
-        }
-
+    }
+    
         // testmain.java
         public static void main(String[] args) {
             Test1 t = new Test1();
@@ -179,7 +178,7 @@
         接口/父类类型 引用变量名 = new 接口/父类类型() {}
     ```
 + 使用
-    ```
+    ```java
         // Test1.java
         public void test(animo ani) {
             ...
@@ -208,23 +207,24 @@
             (参数列表)-> { 方法体 }
         ```
     + 替换示例
-        ```
+        ```java
             // 三号方案
             animo ani = () -> System.out.println("this is lamda");
         ```
 #### 枚举类的概念和自定义实现
 + 概念
+  
     + 事物的取值只有固定的几个，描述事物的所有值都可以列举出来，这个可以列举的烈性就叫做枚举类型
-+ 实现
-    ```
++ 手动实现
+    ```java
         public class Direction {
 
             private final String desc;
 
-            public static final up = new Direction("向上");
-            public static final down = new Direction("向下");
-            public static final left = new Direction("向左");
-            public static final right = new Direction("向右");
+            public static final Direction up = new Direction("向上");
+            public static final Direction down = new Direction("向下");
+            public static final Direction left = new Direction("向左");
+            public static final Direction right = new Direction("向右");
 
             private Direction(String desc) {
                 this.desc = desc;
@@ -239,7 +239,7 @@
 + 枚举的定义
     + 使用public static final修饰比较繁琐，使用enum关键字来定义枚举类型取代常量，枚举类型是从java5开始增加的一个引用数据类型
     + 枚举值就是当前类的类型，也就是指向本类的对象，默认使用public static final修饰，因此采用 枚举类型. 的方式调用
-        ```
+        ```java
             public enum Direction {
 
                 UP("向上"),DOWN("向下"),LEFT("向左"),RIGHT("向右");
@@ -261,9 +261,9 @@
             }
         ```
     + 枚举类可以自定义构造方法，但是构造方法的修饰符必须是private，默认也是私有的
-#### 自定义类和雷剧类型在switch结构中的使用
+#### 自定义类和枚举类型在switch结构中的使用
 + 示例
-    ```
+    ```java
         Direction de
         switch(de) {
             case UP: System.out.println(" ");break;
@@ -284,7 +284,7 @@
 #### 枚举类实现接口的方式
 + 两种
     + 类中重写一次
-        ```
+        ```java
             public enum Direction {
 
                 UP("向上"),DOWN("向下"),LEFT("向左"),RIGHT("向右");
@@ -306,7 +306,7 @@
             }
         ```
     + 每个对象都重写
-        ```
+        ```java
             public enum Direction {
 
                 UP("向上"){
@@ -350,7 +350,7 @@
     + 注解又叫标注，是从java5开始增加的引用数据类型
     + 注解的本质是代码的特殊标记，通过标记可以在编译，类加载，以及运行时执行指定的处理（可以看成接口）
 + 语法格式
-    ```
+    ```java
         访问修饰符 @interface 注解名称 {
             注解成员；
         }
@@ -358,7 +358,7 @@
 + 自定义注解自动继承java.lang.annotation.Annotation接口
 + 通过@注解名称的方式可以修饰包，类，成员方法，成员变量，构造方法，参数，遍布变量的声明
 + 示例
-    ```
+    ```java
         public @interface MyAnnotation{
             // 若一个注解中没有任何成员，那这个注解就叫标记注解
             public String value();  // 在注解类型中这表示声明了一个名为value的成员变量，注解被调用时需要给它赋值
@@ -373,7 +373,7 @@
     ```
 + 注解的使用
     + 注解中只有成员变量，没有成员方法，而注解的成员变量以"无形参的方法"形式来声明，其方法定义了该成员变量的名字，其返回值定义了该成员变量的类型
-    + 如果注解只有一个参数成员，建议使用参数名为value，而类型只能是巴中基本类型，String，Class，enum，Annotation
+    + 如果注解只有一个参数成员，建议使用参数名为value，而类型只能是八种基本类型，String，Class，enum，Annotation
 #### 元注解的概念和@Retetion的使用
 + 概念
     + 元注解可以注解到其他注解上

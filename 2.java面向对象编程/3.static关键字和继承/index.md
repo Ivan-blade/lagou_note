@@ -13,11 +13,13 @@
 + static会随着类被加载被调用和对象创建无关
 #### 构造块和静态代码块
 + 构造块在构造函数之前执行，对象被创建一次，构造块生成一次
+    
     + 在类体中直接用{}括起来的代码块
 + 静态代码块在类加载时准备就绪，会先于构造块执行，即使创建了多个对象也只会调用一次
+    
     + 在类体中用static修饰的{}
 + 示例
-    ```
+    ```java
         public class Test {
             {
                 System.out.println("构造块");
@@ -34,18 +36,18 @@
     ```
 #### main方法的详解
 + 语法格式
-    ```
+    ```java
         public static void main(String[] args) {}
     ```
 + 参数使用举例
     + 写入方法
-        ```
+        ```java
             public static void main(String[] args) {
                 System.out.println(Arrays.toString(args));
             }
         ```
     + 传递数值
-        ```
+        ```java
             // 终端输入命令
             java Test.java luna saber
         ```
@@ -54,7 +56,7 @@
     + 编程呢实现Singleton类的封装
     + 编写SingletomTest类对Singleton类进行测试，要求main方法中能得到且只能得到该类的一个对象
 + Singleton.java
-    ```
+    ```java
         public class Singleton{
 
             // 使用static创建共有对象，用于返回需要的一个对象，private让用户不能将该对象赋值为null从而清空
@@ -69,7 +71,7 @@
         }
     ```
 + SingletonTest.java
-    ```
+    ```java
         public class SingletonTest {
 
             public static void main(String[] args) {
@@ -89,7 +91,7 @@
 + 单例设计模式分类
     + 懒汉式
         + 当用户调用get方法时创建对象
-            ```
+            ```java
                 public class Singleton{
 
                     private static Singleton singleton = null;
@@ -103,13 +105,15 @@
                 }
             ```
     + 饿汉式（推荐--考虑到多线程的问题--上面的示例就是）
+        
         + 类加载立刻创建对象
 #### 继承的由来和概念
 + 概念
+    
     + 当多个类之间有相同特征和行为时，可以将相同的内容提取出来组成一个公共类，让多个类吸收公共类中已有的特征和行为而在多个类型只需要编写自己独有特征和行为的机制叫做继承
 + 在java中extends关键字表示继承
     + 示例
-        ``` 
+        ``` java
             public class Worker extends Person{} // 表示Worker类继承Person类
         ```
     + 其中Person类叫做基类，父类，超类
@@ -126,9 +130,10 @@
 
 #### 方法重写的概念和使用
 + 概念
+    
     + 从父类中继承下来的方法不满足子类需求时，就需要在子类中重写一个和父类一样的方法来覆盖从父类中继承的方法该方式叫重写
 + 假设父类中已有show方法显示父类中所有的元素，想要在子类中调用show方法增加显示子类中特有的属性
-    ```
+    ```java
         @Override  // 注解，表示这是重写方法，如果增加了该注解但是没有重写会报错
         public void show() {
             super.show(); // 调用父类中的show方法
@@ -142,7 +147,7 @@
 #### Animal类的实现
 + 案例
     + Animal类的封装，特征：名字和毛色，提供打印所有特征的方法
-        ```
+        ```java
             public class Animal {
 
                 private String name;
@@ -179,7 +184,7 @@
         ```
 #### Dog和DogTest的实现
 + 封装Dog类继承Animal类，特征：牙齿数量，提供打印所有特征的方法
-    ```
+    ```java
         public class Dog extends Animal{
 
             private int num;
@@ -207,7 +212,7 @@
         }
     ```
 + 实现DogTest类，在main方法中使用无参构造函数和有参方法构造Dog类对象并打印
-    ```
+    ```java
         public class DogTest {
 
             public static void main(String[] args) {
@@ -235,6 +240,7 @@
         ---------------------------------------------
     ```
 + package由来
+    
     + 定义类时需要指定类的名称，但是如果仅仅将类名作为唯一标识，不可避免的会出现明明冲突问题，这会给组件复用以及团队间的合作造成很大麻烦，所以package被用来解决命名问题
 + package定义格式
     + package 包名;
@@ -251,13 +257,14 @@
         ```
 #### final修饰类的方法和作用
 + 基本概念
+    
     + final本意为“最终的，不可改变的”，可以修饰类，成员变量以及成员方法
 + 使用方式
     + final关键字修饰该类表示该类不能被继承--防止类被烂继承
     + final关键字修饰成员方法表示该类不能被重写，但是可以被继承
     + final关键字修饰成员变量表示该变量必须被初始化且不能被修改
         + 初始化操作可以在类中完成
-            ```
+            ```java
                 public class Test{
                     private final int cnt;
 
