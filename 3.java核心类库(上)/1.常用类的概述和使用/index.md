@@ -28,16 +28,14 @@
         + 用于返回调用对象执行时的class实例，反射机制使用
 #### equals方法默认功能的使用
 + 创建学生类后比较两个对象
-    ```
+    ```java
         Student s1= new Student(1,"luna");
         Student s2= new Student(1,"saber");
-
-
         System.out.println(s1.equals(s2));
     ```
 #### equals方法的重写
 + 示例
-    ```
+    ```java
         @Override
         public boolean equals(Object obj) {
             // Object父类想要调用Student子类中的方法需要进行强制转换
@@ -50,7 +48,7 @@
     ```
 #### equals方法的优化
 + 示例
-    ```
+    ```java
         @Override
         public boolean equals(Object obj) {
             
@@ -67,7 +65,7 @@
     ```
 #### hashcode方法的重写实现
 + 示例
-    ```
+    ```java
         /**
         * 重写hashCode使其与equals结果一样
         */
@@ -81,7 +79,7 @@
     ```
 #### toString方法的重写实现
 + 示例
-    ```
+    ```java
         /**
          * 重写toString
          * 1.当打印引用变量时会自动调用该方法
@@ -95,7 +93,7 @@
     ```
 #### 姓名作为基准的重写实现
 + equals重写
-    ```
+    ```java
         @Override
         public boolean equals(Object obj) {
 
@@ -116,7 +114,7 @@
         }
     ```
 + hashCode重写
-    ```
+    ```java
         /**
         * 重写hashCode使其与equals结果一样
         */
@@ -138,9 +136,10 @@
     + 为了满足一切皆对象的概念，需要对基本数据类型的变量进行打包封装处理成对象，而负责将这些变量声明为成员变量进行对象化处理的相关类叫做包装类
 #### Integer类的概念和构造方法
 + 概念
+  
     + java.lang.Integer类内部包装了一个int类型变量作为成员变量，主要用于实现对int类型的包装并且提供int类型到String类型之间的转换等方法
 + 常用变量
-    ```
+    ```java
         System.out.println("最大值是："+Integer.MAX_VALUE);     // 2^32-1
         System.out.println("最小值是："+Integer.MIN_VALUE);     // -2^32
         System.out.println("所表示二进制为："+Integer.SIZE);    // 32
@@ -148,7 +147,7 @@
         System.out.println("对应类型的实例是："+Integer.TYPE);  // int
     ```
 + 构造方法
-    ```
+    ```java
         // 两种过时的
         Integer i1 = new Integer(123);
         Integer i2 = new Integer("123");
@@ -167,12 +166,12 @@
     + intValue方法将Integer类型转变为int类型叫做拆箱
 + java5后自动拆装
     + 直接通过赋值运算符完成拆装
-        ```
+        ```java
             Integer i1 = 5; // 装箱
             int i2 = i1;    // 拆箱
         ```
 + 装箱拆箱笔试考点
-    ```
+    ```java
         Integer i1 = 128;
         Integer i2 = 128;
         Integer i5 = 127;
@@ -187,10 +186,11 @@
         System.out.println(i5.equals(i6));  // 比较内容 true
     ```
 + 自动装箱池
+  
     + 在Integer类中提供了自动装箱池技术，-128——127之间的整数装箱完毕，大概程序使用该范围内的整数时，无序装箱直接到自定装箱池中取就好了，从而提高效率（也就是说-128——127内装箱获取的对象不会创建新的内存空间而是调用默认的对象，不同引用对该范围内同一个数字进行装箱时指向同一个对象）
 #### Integer类的常用方法
 + 进制转换示例
-    ```
+    ```java
         Integer i1 = 200;
         System.out.println(Integer.toString(i1));
         System.out.println(Integer.toBinaryString(i1));
@@ -205,7 +205,7 @@
 + 常用方法
 <img src="../../images/Double-methods.png">
 + 装拆箱示例
-    ```
+    ```java
         // java5前手动
         Double d1 = Double.valueOf(3.14);
         double d2 = d1.doubleValue();
@@ -223,7 +223,7 @@
 + 概念
 <img src="../../images/Character.png">
 + 使用
-    ```
+    ```java
         Character c = 'c';
 
         System.out.println(Character.isDigit(c));       // 字符是否为数字型
@@ -247,7 +247,7 @@
 + 注意
     + 如果使用该类型进行操作后得到无限循环小数不能精确表示将会报错，这时需要制定模式
     + 示例
-        ```
+        ```java
             BigDecimal b1 = new BigDecimal("5.2");
             BigDecimal b2 = new BigDecimal("2.3");
 

@@ -14,7 +14,7 @@
     + 申请内存的大小
 #### StringBuilder类实现插入操作
 + 示例
-    ```
+    ```java
         StringBuilder sb = new StringBuilder();
         sb.insert(0,"123");
         System.out.println(sb);
@@ -23,7 +23,7 @@
 + 别问问就是2*n+2,如果扩容还不够，自己看源码
 #### StringBuilder类实现字符和字符串的删除
 + 示例
-    ```
+    ```java
         StringBuilder sb = new StringBuilder();
         sb.insert(0,"123");
         sb.append("456");  // 123456
@@ -34,7 +34,7 @@
     ```
 #### StringBuilder类的改查以及反转操作
 + 示例
-    ```
+    ```java
         StringBuilder sb = new StringBuilder();
         sb.insert(0,"123");
         sb.append("456");  // 123456
@@ -48,17 +48,18 @@
 #### 字符串类的笔试考点
 + 为什么StringBuilder类的对象本身可以修改，为什么成员方法还需要返回值呢？
     + 为了连续调用
-        ```
+        ```java
             sb.reverse().append("1").append("2");
         ```
 + 如何实现StringBuilder和String之间的相互转换
     + 调用相关成员方法
-        ```
+        ```java
             String str = "123";
             StringBuilder sb = new StringBuilder(str);
             String res = sb.toString(); 
         ```
 + String,StringBuilder,StringBuffer之间的效率排序
+    
     + String < StringBuffer < StringBuilder
 #### System类的概念和使用
 + java.lang.System类中提供了一些有用的类和方法
@@ -82,6 +83,7 @@
         + 设置调用对象为距离基准时间time毫秒的时间点
 #### SimpleDateFormat类的概念和使用
 + 基本概念
+    
     + java.text.SimpleDateFormat类主要用于实现日期和文本之间的转换
 + 常用方法
     + SimpleDateFormat()
@@ -93,7 +95,7 @@
     + Date parse(String source)
         + 将文本转为日期
 + 示例
-    ```
+    ```java
         public static void main(String[] args) throws Exception{
 
             Date date = new Date();
@@ -126,7 +128,7 @@
         + 在指定字段原有的基础上增加数值
 #### Calendar类的方法和多态的使用方式
 + 示例
-    ```
+    ```java
         public static void main(String[] args) {
 
             Calendar cal = Calendar.getInstance();
@@ -154,18 +156,18 @@
         + 多态
 + 多态使用场合
     + 通过方法的参数传递形成多态
-        ```
+        ```java
             public static void draw(Shape s) {
                 s.show();
             }
             draw(new Rect(1,2,3,4));
         ```
     + 在方法体中直接使用多态的语法格式
-        ```
+        ```java
             Account acc = new FixedAccount();
         ```
     + 通过方法的返回值类型形成多态
-        ```
+        ```java
             Calender getInstance() {
                 return new GregorianCalendar(zone,aLocate);
             }
@@ -203,7 +205,7 @@
     + 常用方法
 #### 日期时间对象的创建和特征获取
 + 示例
-    ```
+    ```java
         public static void main(String[] args) {
 
                 LocalDate date = LocalDate.now();
@@ -237,7 +239,6 @@
         Instant ins = Instant.now();
         System.out.println(ins);
         // 这里获取的时间是0时区的时间
-
 
         OffsetDateTime offsetDateTime = ins.atOffset(ZoneOffset.ofHours(8));
         System.out.println(offsetDateTime);
