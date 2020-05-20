@@ -182,16 +182,45 @@
 #### 自定义异常类的实现
 
 + 基本概念
+  
   + 当需要在程序中表达年龄不合理时，java官方没有提供这种异常就需要自定义异常
 + 实现流程
   + 自定义xxxException异常类继承Exception或者它的子类
+  
   + 使用两个版本的构造方法，一个是无参构造方法，另一个是字符串作为参数的构造方法
+  
+  + 加上序列化版本号
+  
+    ```java
+    public class AgeException extends Exception{
+    
+        // 这边序列化版本号没有加 —— implements Seri...然后alt+enter自动生成
+        public AgeException() {
+        }
+    
+        public AgeException(String message) {
+            super(message);
+        }
+    }
+    ```
+  
 + 异常的产生
   + throw new 异常类型（实参）；
   + 如 throw new AgeException("年龄不合理")；
 + java采用的异常处理机制是将异常处理的程序代码集中在一起与正常的代码分开，使得程序简洁，优雅易于维护
 
 #### 自定义异常类的使用
+
++ Student.java
+
+  ```java
+  public void setAge(int age) throws AgeException {
+          if(age > 0) this.age = age;
+          else throw new AgeException("年龄不合理");
+      }
+  ```
+
+  
 
 + 嗯哼？？？
   + 在方法中需要报错异常的地方使用throw抛出一个异常类对象
@@ -222,7 +251,7 @@
   
            /*构造file类与f:/temp/a.txt相关联
            若文件存在打印相关信息后删了
-           若文件不存在创建新的文件*/
+           若文件不存在创建新的文件（只能在已有的目录下创建）*/
           File f1 = new File("f:/temp/a.txt");
           if(f1.exists()) {
               System.out.println(f1.getName());

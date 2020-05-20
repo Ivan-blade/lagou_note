@@ -39,7 +39,7 @@
 + 注意
 
   + FileWriter在关联文件时
-    + 如果文件不存在会自动创建
+    + 如果文件不存在会自动创建（前提是目录都存在）
     + 如果文件存在会先清空文件内容
 
 + 示例
@@ -106,7 +106,7 @@
               // 读取单个字符 当没有参数时，fr.read()返回读取字符的ASCII值
               // System.out.println((char)fr.read());
               // 读取所有字符
-              /*int index  = -2;
+              /*int index  = 0;
               while((index = fr.read()) != -1) {
                   System.out.print((char)index);
               }
