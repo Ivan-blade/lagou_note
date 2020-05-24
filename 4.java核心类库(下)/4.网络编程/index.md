@@ -361,41 +361,40 @@
 + serverThread
 
   ```java
-  public class ClientStringTest {
+  public class ServerThread extends Thread{
   
-      public static void main(String[] args) {
+      private Socket s;
   
-          Socket s = null;
-          PrintStream ps =null;
-          Scanner sc = null;
+      public ServerThread(Socket s){
+          this.s = s;
+      }
+  
+      @Override
+      public void run() {
           BufferedReader br = null;
+          PrintStream ps = null;
           try {
-              // 1. 创建Socket类型对象并提供服务器的主机名和端口号
-              s = new Socket("127.0.0.1",8888);
-              System.out.println("succeed to connnect to server!");
-              // 2. 使用输入输出流进行通信
-              sc = new Scanner(System.in);
-              ps = new PrintStream(s.getOutputStream());
               br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-              while(true) {
-                  System.out.println("please input the message you want to send: ");
-                  String str = sc.nextLine();
-                  if("bye".equalsIgnoreCase(str)) {
-                      System.out.println("chat is over");
+              ps = new PrintStream(s.getOutputStream());
+              while (true) {
+                  String s1 = br.readLine();
+                  InetAddress inetAddress = s.getInetAddress();
+                  System.out.println("the info of "+inetAddress+" send is : " + s1);
+                  if("bye".equalsIgnoreCase(s1)) {
+                      System.out.println("client "+inetAddress+" is offline");
                       break;
                   }
-                  // ps.println("hello");
-                  ps.println(str);
-                  System.out.println("info of client sends successfully");
-                  String s1 = br.readLine();
-                  System.out.println("the info server send is :" + s1);
+                  // 服务器返回信息
+                  ps.println("message received!");
+                  System.out.println("server send message successfully!");
               }
-          }
+          } 
           ...
       }
   }
+  
   ```
-
+  
 + client
 
   ```java

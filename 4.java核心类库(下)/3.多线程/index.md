@@ -175,7 +175,7 @@
 
 + 案例
   
-+ 自定义类继承Thread类并重写run方法，在run方法中先打印当前线程的编号和名称，然后将线程的名称修改为“张飞”后再次打印编号和名称，要求在main方法中也要打印主义乡村的编号和名称
++ 自定义类继承Thread类并重写run方法，在run方法中先打印当前线程的编号和名称，然后将线程的名称修改为“张飞”后再次打印编号和名称，要求在main方法中也要打印线程的编号和名称
   
 + 示例
 
@@ -772,7 +772,7 @@
       }
   
   	public static /*synchronized*/ test() {
-          // 静态方法修饰等同于synchronized（类名.class）包含代码块
+          // 静态方法加synchronized修饰等同于synchronized（类名.class）包含代码块
           synchronized(AccountThreadTest.class){
               int temp = getBalance();
               if (temp > 200) {
