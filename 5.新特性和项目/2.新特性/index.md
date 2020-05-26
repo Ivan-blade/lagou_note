@@ -189,7 +189,7 @@
                   return o1.compareTo(o2);
               }
           };*/
-          // 方法调用写法，因为这边是一个对象作为参数另一个对象调用方法所以跨域使用类名::方法
+          // 方法引用写法，因为这边是一个对象作为参数另一个对象调用方法所以跨域使用类名::方法
           Comparator<Integer> comparator1 = Integer::compare;
           comparator1.compare(12,13);
   
@@ -205,7 +205,7 @@
           // lambda表达式创建对象
           /*Supplier<Person> supplier1 = () -> new Person();*/
   
-          // 方法调用创建对象
+          // 方法引用创建对象
           /*Supplier<Person> supplier1 = Person::new;
           System.out.println(supplier1.get());*/
   
@@ -222,7 +222,7 @@
           /*BiFunction<String,Integer,Person> biFunction = (s,i) -> new Person(s,i);
           System.out.println(biFunction.apply("luna",16));*/
   
-          // 方法调用创建对象
+          // 方法引用创建对象
           /*BiFunction<String,Integer,Person> biFunction = Person::new;
           System.out.println(biFunction.apply("luna",16));*/
   
@@ -240,7 +240,7 @@
           /*Function<Integer,Person[]> function1 = i -> new Person[i];
            * function1.apply(5);*/
   
-          // 方法调用
+          // 方法引用
           /*Function<Integer,Person[]> function1 = Person[]::new;
           function1.apply(5);*/
       }
@@ -311,19 +311,6 @@
   + 方式三：通过Stream接口的静态方法获取流，如static<T> Stream<T>  of(T... values)
   + 方式四：通过Stream接口的静态方法来获取流，static<T> Stream<T> generate(Supplier<? extends T>s)
   
-+ 中间操作
-
-  | 方法声明                                         | 功能介绍                   |
-  | ------------------------------------------------ | -------------------------- |
-  | Stream<T> filter(Preducate<? super T> predicate) | 返回一个包含匹配元素的流   |
-  | Stream<T> disctinct()                            | 返回不包含重复元素的流     |
-  | Stream<T> limit(long maxSize)                    | 返回不超过给定元素数量的流 |
-  | Stream<T> skip(long n)                           | 返回丢弃前n个元素后的流    |
-
-+ 常用方法
-
-  <img src="../../images/List-Stream.png">
-
 + demo
 
   ```java
@@ -358,7 +345,7 @@
           });
           // lambda表达式
            list.stream().filter(person -> person.getAge() >= 18).forEach((person) -> System.out.println(person));
-          // 方法调用
+          // 方法引用
           list.stream().filter(person -> person.getAge() >= 18).forEach(System.out::println);
       }
   }
@@ -367,27 +354,473 @@
 
 #### Stream流实现集合元素的切片和映射
 
-+ 
++ 切片中间操作
+
+  | 方法声明                                         | 功能介绍                   |
+  | ------------------------------------------------ | -------------------------- |
+  | Stream<T> filter(Preducate<? super T> predicate) | 返回一个包含匹配元素的流   |
+  | Stream<T> disctinct()                            | 返回不包含重复元素的流     |
+  | Stream<T> limit(long maxSize)                    | 返回不超过给定元素数量的流 |
+  | Stream<T> skip(long n)                           | 返回丢弃前n个元素后的流    |
+
++ demo
+
+  ```java
+  public class ListPersonTest {
+  
+      public static void main(String[] args) {
+  
+          // 1.准备一个List集合放入Person对象并打印
+          List<Person> list = new ArrayList<>();
+          list.add(new Person("luna",16));
+          list.add(new Person("sakura",16));
+          list.add(new Person("ivan",22));
+          list.add(new Person("blade",22));
+          list.add(new Person("nothing",22));
+          list.add(new Person("noname",22));
+          
+          // 实现对集合中元素跳过两个元素后再取三个元素并打印
+          list.stream().skip(2).limit(3).forEach(System.out::println);
+  
+      }
+  }
+  
+  ```
+  
+  
+  
++ 映射常用方法
+
+  <img src="../../images/List-Stream.png">
+  
++ demo
+
+  ```java
+  public class ListPersonTest {
+  
+      public static void main(String[] args) {
+  
+          // 1.准备一个List集合放入Person对象并打印
+          List<Person> list = new ArrayList<>();
+          list.add(new Person("luna",16));
+          list.add(new Person("sakura",16));
+          list.add(new Person("ivan",22));
+          list.add(new Person("blade",22));
+          list.add(new Person("nothing",22));
+          list.add(new Person("noname",22));
+  
+          // 实现将集合中的所有年龄获取出来并打印
+          list.stream().map(new Function<Person, Integer>() {
+              @Override
+              public Integer apply(Person person) {
+                  return person.getAge();
+              }
+          }).forEach(System.out::println);
+          
+          list.stream().map(item -> item.getAge()).forEach(System.out::println);
+          
+          list.stream().map(Person::getAge).forEach(System.out::println);
+      }
+  }
+  ```
+
+  
 
 #### Stream流实现集合元素的排序
 
++ main
+
+  ```java
+  // 实现list中元素的自然排序并打印
+  list.stream().sorted().forEach(System.out::println);
+  ```
+
++ Person类中需要实现Comparable接口重写comparaTo方法
+
+  ```java
+  @Override
+  public int compareTo(Person o) {
+      return getName().compareTo(o.getName());
+  }
+  ```
+
+  
+
 #### Stream流实现集合元素的匹配和查找
+
+| 方法声明                                          | 功能介绍               |
+| ------------------------------------------------- | ---------------------- |
+| Optional<T> findFirst                             | 返回该流的第一个元素   |
+| boolean allMatch(Predicate<? super T> predicate)  | 返回元素是否匹配       |
+| boolean noneMatch(Predicate<? super T> predicate) | 返回没有元素是否匹配   |
+| Optional<T> max(Comparator<? super T> comparator) | 根据比较器返回最大元素 |
+| Optional<T> min(Comparator<? super T> comparator) | 根据比较器返回最小元素 |
+| long count                                        | 返回元素个数           |
+| void forEach(Consumer<? super T> action)          | 对流中每个元素执行操作 |
+
++ demo
+
+  ```java
+  // 判断是否有年龄大于45岁的
+          boolean b = list.stream().noneMatch(new Predicate<Person>() {
+              @Override
+              public boolean test(Person person) {
+                  return person.getAge() > 45;
+              }
+          });
+  
+          // 判断指定的比较器规则获取集合所有元素的最大值
+          // 匿名内部类
+          Optional<Person> max = list.stream().max(new Comparator<Person>() {
+              @Override
+              public int compare(Person o1, Person o2) {
+                  return o1.getAge() - o2.getAge();
+              }
+          });
+          System.out.println(max);
+          // lambda
+          list.stream().max((o1,o2) -> o1.getAge() - o2.getAge());
+  ```
+
+  
 
 #### Stream流实现集合元素的规约和收集
 
++ 规约方法
+
+  + Optional<T> reduce(BinaryOperator<T> accumulator) 
+
+    + 返回结合后的元素值
+    + 就是将所有元素处理成一个元素
+
+  + demo
+
+    ```java
+    // 将集合中所有元素映射出来累加并打印
+            Optional<Integer> reduce = list.stream().map(Person::getAge).reduce(new BinaryOperator<Integer>() {
+                @Override
+                public Integer apply(Integer integer, Integer integer2) {
+                    return integer + integer2;
+                }
+            });
+    
+            list.stream().map(Person::getAge).reduce((i1,i2) -> i1+i2);
+            list.stream().map(Person::getAge).reduce(Integer::sum);
+    ```
+
+    
+
++ 收集常用方法如下
+
+  + <R,A> R collect<Collector<? super T,A,R> collector>
+
+    + 使用收集器对元素进行处理
+
+  + demo
+
+    ```java
+    // 将集合中所有姓名收集并打印
+       list.stream().map(Person::getName).collect(Collectors.toList()).forEach(System.out::println);
+    
+    ```
+
+    
+
 #### Optional类的概念和使用
+
++ 案例
+
+  + 判断一个字符串是否为空如果为空打印0不为空打印长度
+
+  + 传统demo
+
+    ```java
+    public class OptionalTest {
+    
+        public static void main(String[] args) {
+    
+            String str1 = "hello";
+            if(null == str1) System.out.println(0);
+            else System.out.println(str1.length());
+        }
+    }
+    ```
+
++ 概念
+
+  + java.util.Optional类可以理解为一个简单的容器，其值可能是null或者不是null，代表一个值存在或者不存在
+  + 该类的引用很好的解决了空指针异常，不用显式进行空值检测
+
++ 常用方法
+
+  | 方法声明                                                   | 功能介绍                                       |
+  | ---------------------------------------------------------- | ---------------------------------------------- |
+  | static<T> Optional<T> ofNullable(T value)                  | 根据参数指定数值来得到Optional类型的对象       |
+  | <u> Optional<U> map(Function<? super T,?extends U> mapper) | 根据参数指定规则的结果来得到Optional类型的对象 |
+  | T orElse(T other)                                          | 若该值存在就返回，否则返回other的数值          |
+
++ demo
+
+  ```java
+  public class OptionalTest {
+  
+      public static void main(String[] args) {
+  
+          String str1 = null;
+          /*if(null == str1) System.out.println(0);
+          else System.out.println(str1.length());*/
+  
+          // 使用Optional类实现空值的处理
+          Optional<String> optional = Optional.ofNullable(str1);
+          /*Optional<Integer> integer = optional.map(new Function<String, Integer>() {
+              @Override
+              public Integer apply(String s) {
+                  return s.length();
+              }
+          });*/
+          /*Optional<Integer> integer = optional.map(s -> s.length());*/
+          Optional<Integer> integer = optional.map(String::length);
+  
+          System.out.println(integer);
+          System.out.println(integer.orElse(0));
+  
+      }
+  }
+  
+  ```
+
+  
 
 #### 模块化的概念和使用
 
++ java9新特性
+
+  + java9的主要变化是模块化
+  + 模块就是代码和数据的封装体，模块的代码被组织成多个包，每个包中包含java类的接口，模块的数据则包括资源文件和其他静态信息
+
++ 模块化的使用
+
+  + 语法格式
+
+    + 在module-info.java中，我们可以用新的关键词module来声明一个模块，具体
+
+    + demo
+
+      ```java
+      module xxx {
+          
+      }
+      ```
+
++ 模块化的优势
+
+  + 减少内存的开销
+  + 简化各种类库和大型应用的开发和维护
+  + 安全性，可维护性，提高性能
+
++ demo
+
+  + idea中创建module java9-01
+
+  + idea中创建module java9-02
+
+  + 在java9-01中创建com.Ivan.Person类
+
+  + 在java9-01中创建module-info.java并暴露该模块中的相关包
+
+    ```java
+    module java9 {
+         exports com.Ivan;
+    }
+    ```
+
+  + 在java9-02中创建Test.java测试类
+
+  + 在java9-02中创建module-info.java引入模块
+
+    ```java
+    module java902 {
+         requires java9;
+    }
+    ```
+
+  + 在测试类中使用其他模块中的类
+
+    ```java
+    import com.Ivan.Person;
+    public class PersonTest {
+    
+        public static void main(String[] args) {
+    
+            Person person = new Person();
+        }
+    }
+    ```
+
+    
+
 #### 钻石操作符的使用升级
+
++ 在java9中允许使用匿名内部类的同时使用钻石操作符（没错就是它。。。 <>）
+
+  ```java
+  public class DiamondTest {
+  
+      public static void main(String[] args) {
+  
+          // Comparator<Integer> comparator = new Comparator<Integer>() {
+          // java9之后就可以不写后面的Integer了。。。
+          Comparator<Integer> comparator = new Comparator<>() {
+              @Override
+              public int compare(Integer o1, Integer o2) {
+                  return 0;
+              }
+          };
+      }
+  }
+  
+  ```
+
+  
 
 #### 集合工厂方法的使用
 
++ 基本概念
+
+  + java9的List,Set,Map集合中增加了静态工厂方法of实现不可变实例的创建
+  + 不可变体现在无法添加，修改和删除它们的元素
+  + 不允许添加null元素对象
+
++ 实际意义
+
+  + 保证线程安全：在并发程序中既保证线程安全也增加了并发效率
+  + 被不可信的类库使用时会很安全
+  + 如果一个对象不需要支持修改操作，将会节省空间和时间的开销
+  + 可以当作一个常量来对待，并且这个对象以后也不会改变
+
++ demo
+
+  ```java
+  public class ColleactionTest {
+  
+      public static void main(String[] args) {
+  
+          // 使用of创建的集合无法进行增加删除修改操作
+          List<Integer> list = List.of(1,23,3,4);
+          System.out.println(list);
+  
+          Map<Integer,String> map = Map.of(1,"luna",2,"saber");
+          System.out.println(map);
+      }
+  }
+  ```
+
+  
+
 #### InputStream类的增强
+
++ InputStream提供了transferTo方法实现将数据直接传送到OutputStream中
+
++ demo
+
+  ```java
+  public class InputStreamTest {
+  
+      public static void main(String[] args) {
+  
+          InputStream inputStream = null;
+          OutputStream outputStream = null;
+  
+  
+          try {
+              inputStream = new FileInputStream("d:/abc.txt");
+              outputStream = new FileOutputStream("d:/abcd.txt");
+              inputStream.transferTo(outputStream);  
+              // 快速实现文件拷贝，底层使用的是带有缓冲区的read和write
+          } catch (IOException e) {
+              e.printStackTrace();
+          } finally {
+              if(null != inputStream) {
+                  try {
+                      inputStream.close();
+                  } catch (IOException e) {
+                      e.printStackTrace();
+                  }
+              }
+              if(null != outputStream) {
+                  try {
+                      outputStream.close();
+                  } catch (IOException e) {
+                      e.printStackTrace();
+                  }
+              }
+          }
+  
+      }
+  }
+  
+  ```
+
+  
 
 #### 局部变量类型的判断
 
++ java10新特性
+
+  + java10与2018年3月发布，改进的关键点包括本地类型的判断，一个垃圾回收处理器的增强
+  + java10计划只是一个短期版本，因此公开更新将在六个月内结束，9月份发布的java11将是java的长期支持（LTS版本），LTS版本的发布每三年发布一次
+
++ 局部变量类型判断
+
+  + 基本概念
+    + java10可以使用var作为局部变量类型推断标识符，此符号仅适用于局部变量，增强for循环的索引，以及传统的for循环的本地变量
+    + 它不能使用于方法的形式参数，构造函数形式参数，方法返回类型，字段，catch形式参数或者任何其他类型的变量声明
+  + 实际意义
+    + 标识符var不是关键字，只是一个保留的类型名称，这意味着var用作变量，方法名，包名的代码不会受到影响，但var不能作为类或者接口的名字
+    + 避免的信息冗余
+    + 对齐的变量名
+    + 更容易阅读
+
++ demo
+
+  ```java
+  public class VarTest {
+  
+      public static void main(String[] args) {
+  
+          var num = 10;
+  
+          // 这边就需要在<>指定类型否则list中保存的是object类型
+          var list = new ArrayList<>();
+          list.add(1);
+      }
+  }
+  
+  ```
+
+  
+
 #### 简化的编译运行和String类中的新增方法
+
++ java11概述
+
+  + java11与2018年9月正式发布，这是java大版本周期变化后的第一个长期版本，非常值得关注
+
++ 简化的编译运行的操作
+
+  + 在java11中可以使用java命令一次性编译和运行操作
+  + 执行源文件中的第一个类必须包含方法
+  + 不可以使用其他源文件中自定义的类
+
++ String类新增的方法
+
+  | 方法声明                                                   | 功能介绍                                       |
+  | ---------------------------------------------------------- | ---------------------------------------------- |
+  | boolean isBlank()                                          | 判断字符串是否为空或者只包含空白代码点         |
+  | <U> Optional<U> map(Function<? super T,?extends U mapper>) | 根据参数指定规则的结果来得到Optional类型的对象 |
+  | T orElse(T other)                                          | 若该值存在就返回，否则返回other数值            |
+
+  
 
 
 
