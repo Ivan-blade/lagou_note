@@ -83,7 +83,7 @@
     ```
 #### 异常捕获的注意事项
 + 懒人捕获一把梭
-    ```
+    ```java
         try{
             ...
         } catch (Exception e) {
@@ -270,7 +270,7 @@
                   e.printStackTrace();
               }
           }
-          // 实现目录的创建
+          // 实现目录的关联
           File f2 = new File("f:/temp/temp/temp");
           if(f2.exists()) {
               System.out.println("the name of directory is:"+f2.getName());

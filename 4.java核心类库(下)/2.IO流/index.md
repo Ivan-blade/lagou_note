@@ -262,6 +262,9 @@
         fos = new FileOutputStream("f:/temp/temp/temp/3.png");*/
         fis = new FileInputStream("f:/temp/temp/temp/4.mp4");
         fos = new FileOutputStream("f:/temp/temp/temp/5.mp4");
+        // BufferedInputStream bis = new BufferedInputStream(new FileInputStream("f:/temp/temp/temp/4.mp4));
+        // BufferedOutStream bos = new BufferedOutputStream(new FileInputStream("f:/temp/temp/temp/4.mp4))                                                                    
+                                                                              
         /* 文件较大复制过程太慢
         int index = -1;
         while((index = fis.read()) != -1) {
@@ -274,16 +277,16 @@
         fos.write(arr);*/
         System.out.println("copying is over");
     } catch (IOException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
-    ```
-
-    
-
-  + 缺点
-
+  ```
+  
+  
+  
++ 缺点
+  
     + 如果文件过大无法申请和文件大小一样的缓冲区，真实物理内存不足
-
+  
   
 
 #### 拷贝文件方式三的实现
@@ -328,12 +331,13 @@
               bis = new BufferedInputStream(new FileInputStream("f:/temp/temp/temp/4.mp4"));
               bos = new BufferedOutputStream(new FileOutputStream("f:/temp/temp/temp/5.mp4"));
   
-              /*byte[] arr = new byte[1024];
+              byte[] arr = new byte[1024];
               int size = 0;
-  
+  		   // Buffered类中自定义了缓存区的大小默认为8192，配合数组缓存区使用，减少了流与底层接触的次数，从而提高了效率(本来使用FileInputStream只要数值存满1024，就立刻写入，但是使用Buffered流，类内部会暂时存储前几次读取的内容，当内容大小到达8192时统一写入)
               while((size = bis.read(arr)) != -1) {
                   bos.write(arr,0,size);
-              }*/
+              }
+              
               System.out.println("copy is over");
           } catch (Exception e) {
               e.printStackTrace();
@@ -359,7 +363,8 @@
   }
   
   ```
-
+```
+  
   
 
 #### 缓冲字节流和文件字节流效率的比较
@@ -408,7 +413,7 @@
   
       }
   }
-  ```
+```
 
   
 

@@ -17,7 +17,7 @@
     + java.util.Collection接口是List接口，Queue接口，Set接口的父接口，因此该接口里定义的方式既可以用于操作List集合，也可以用于操作Queue和Set集合
 <img src="../../images/Collection-methods.png">
 + 示例
-    ```
+    ```java
         // Collection c1 = new Collection(); collection是接口不能创建实例
         Collection c1 = new ArrayList();
         c1.add(new String("123"));
@@ -36,6 +36,7 @@
 
 #### Collection集合判断单个元素是否存在
 + contains()
+    
     + 该方法的本质是调用了元素的equals方法
 + 示例
     ```
@@ -50,7 +51,7 @@
     ```
 #### Collection集合实现交集的计算
 + 示例
-    ```
+    ```java
         Collection c3 = new ArrayList();
         c3.add(0);
         c3.add(1);
@@ -65,14 +66,14 @@
 + remove(Object obj)
 + removeAll(Collection c)
     + 该方法也是调用了元素的equals方法
-        ```
+        ```java
             boolean b1 = c1.remove(c2); // true [123, 4, a, 9, 567, 9]
             boolean b2 = c1.removeAll(c2); // true 将c2的元素从c1中全部删除，有则删无则跳，只要删除过一个元素就返回true
             System.out.println(c1); // [123, 4, a]
         ```
 #### Collection集合实现其他方法的测试
 + 示例
-    ```
+    ```java
         c1.clear();
         System.out.println(c1.size());
         System.out.println(c1.isEmpty());
@@ -87,7 +88,7 @@
     ```
 #### Collection集合和数组的转换方式
 + 示例
-    ```
+    ```java
         // 集合到数组
         Object[] objects = c5.toArray();
         System.out.println(Arrays.toString(objects));
@@ -109,7 +110,7 @@
             + 用于删除访问到的最后一个元素
 #### Collection集合使用迭代器模拟toString()
 + 示例
-    ```
+    ```java
         Collection c1 = new ArrayList();
 
         c1.add("one");
@@ -134,7 +135,7 @@
 #### Collection集合迭代的过程中删除元素
 + remove()
     + 删除最近访问的元素
-        ```
+        ```java
             iterator = c1.iterator();
 
             while (iterator.hasNext()) {
@@ -149,6 +150,7 @@
     + 迭代器
     + foreach循环（java5开始）
 + 基本概念
+    
     + java5开始推行的增强型for循环
 + 语法结构
     ``` 
@@ -236,6 +238,7 @@
                 while(!stack.isEmpty()) {
                     System.out.println(stack.pop());
                 }
+        ```
 
 
             }
@@ -288,6 +291,7 @@
     + 如果声明了泛型但是不指定类型，会默认当做Object类处理
 #### 自定义泛型类的实现和使用
 + 自定义泛型接口概念
+    
     + 泛型接口和普通接口的区别就是后面增加了类型参数列表，可以有多个参数选择
 + 自定义泛型类
     + 泛型类和普通类的区别就是类名后面多了参数列表可以有多个类型参数<T,E...>
@@ -295,7 +299,7 @@
     + 父类有泛型，子类可以选择保留泛型也可以选择指定泛型类型
     + 子类除了指定和保留泛型之外还可以有自己的泛型
 + 示例
-    ```
+    ```java 
         // Person.java
         Person<T>{
             private int age;
@@ -357,20 +361,21 @@
     + 如果B是A的子类或者子接口，而G是具有泛型声明的类或接口，则G<B>并不是G<A>的子类型
     + 例如：String是Object的子类但是List<String>不是List<Object>的子类
 + 使用通配符作为泛型类型的公共类
-    ```
+    ```java
         public static void main(String[] args) {
 
             List<String> list = new LinkedList<>();
             List<Integer> list1 = new LinkedList<>();
-
+        list1.add(100);
+    
             // 使用通配符作为泛型的公共父类
             List<?> list2 = new LinkedList<>();
             list2 = list;       // 可以发生list<String>到list<?>的转换
+            list2.add("1");     // 虽然可以转换但是list<?>不能承载String内容
             list2 = list1;      // 可以发生list<Integer>到list<?>的转换
             list2.add(1);       // 虽然可以转换但是list<?>不能承载Integer内容
-            list2.add("1");     // 虽然可以转换但是list<?>不能承载String内容
             Object o = list2.get(0);// 没有报错，不支持添加但支持获取，默认为Object类型
-            System.out.println(list);
+            System.out.println(list2);	// [100]
         }
     ```
 + 通配符的使用
@@ -381,7 +386,7 @@
         + <? extends E> 表示类型的上界是E，只能是E或者E的子类
         + <? super E> 表示类型的下界是E，只能是E或者E的父类
     + 上界示例
-        ```
+        ```java
             // 泛型必须是Collection以及Collection子类
             List<List> list4 = new ArrayList<>();
             List<Object> list5 = new ArrayList<>();
@@ -394,14 +399,14 @@
             Collection collection = list2.get(0);// 设置上界后，获取元素的类型变为上界
         ```
     + 下界示例
-        ```
+        ```java
             // 泛型必须是Collection以及Collection父类
             List<? super Collection> list2 = new LinkedList<>();
             List<List> list4 = new ArrayList<>();
             List<Object> list5 = new ArrayList<>();
             list2 = list4;  // List不是Collection的父类所以不可以赋值
             list2 = list5;  // Object是Collection的父类所以可以赋值
-            list2.add(list);       // 可以添加Collection子类内容，因为list2中元素必定是collection的父类及以上
+            list2.add(list);       // 可以添加Collection子类内容
             list2.add(new Object());     // 可以添加Collection子类内容，但是不能超过collection，
             Object object = list2.get(0);// 设置下界后，获取元素的类型变为上界也就是Object
             System.out.println(list);
@@ -416,10 +421,11 @@
     + 其中LinkedHashSet类与HashSet类的不同之处在于内部维护了一个双向链表，链表中记录了元素的迭代顺序，也就是元素插入集合的先后顺序因此便于迭代
 #### HashSet集合的基本使用
 + 常用方法
+    
     + 参考Collection方法即可
 + 案例
     + 准备一个Set指向HashSet对象，向该集合中添加元素"two"并打印，再向集合中添加元素"one"并打印，再添加"three"并打印，再向集合中添加元素"one"并打印
-        ```
+        ```java
             // 可以看出hashset并没有按输入顺序打印(因为是hash表存储啊。。。)
             public static void main(String[] args) {
 
@@ -437,7 +443,7 @@
             }
         ```
     + 如果改用LinkedHashSet执行相同操作，输出结果会遵循添加顺序
-        ```
+        ```java
             Set<String> set = new LinkedHashSet<>();
             // [two]
             // [two, one]
@@ -449,7 +455,7 @@
 
 #### TreeSet集合的概念
 + 示例
-    ```
+    ```java
         Set<String> set = new TreeSet<>();
 
         set.add("aa");
@@ -461,7 +467,7 @@
 #### TreeSet集合中实现自然排序
 + 示例
     + Student.java
-        ```
+        ```java
             public class Student implenments Comparable<Student>{
                 private int age;
                 private String name;
@@ -477,7 +483,7 @@
             }
         ```
     + main.java
-    ```
+    ```java
         Set<Student> set1 = new TreeSet<>();
         set1.add(new Student(18,"luna"));
         set1.add(new Student(19,"saber"));
@@ -487,7 +493,7 @@
     ```
 #### TreeSet集合中实现比较器排序
 + 示例
-    ```
+    ```java
         Comparator<Student> comparator = new            Comparator<Student>() {
                 @Override
                 public int compare(Student o1, Student o2) {
@@ -495,6 +501,13 @@
                     return o2.getAge() - o1.getAge();
                 }
         };
+    	/*lambda表达式写法
+    		   Set<Student> set = new TreeSet<>((s1,s2) -> {
+                	int res = s2.getAge()-s1.getAge();
+                	if (res != 0) return res;
+                	else return s1.getName().compareTo(s2.getName());
+         	   });
+         */
         Set<Student> set1 = new TreeSet<>(comparator);
         set1.add(new Student(18,"luna"));
         set1.add(new Student(19,"saber"));
@@ -503,7 +516,7 @@
         // Comparator和Comparable同时存在优先Comparator
     ```
 + Comparator的lamda表达式写法
-    ```
+    ```java
         Comparator<Student> comparator = (Student o1,Student o2) -> {
             return o2.getAge() - o1.getAge();
         };
@@ -528,7 +541,7 @@
 
 #### Map集合实现元素的增加和修改
 + 示例
-    ```
+    ```java
         Map<String,String> map = new HashMap<>();
 
         map.put("1","luna");
@@ -565,14 +578,14 @@
 <img src="../../images/Collectios-methods.png">
 
 + 示例
-    ```
+    ```java
         // 注意copy比较的是两个集合的size()并不是容量，所需注意创建方法
         List<Integer> list = Arrays.asList(1,2,3,4,5);
         List<Integer> list1 = Arrays.asList(new Integer[10]);
         System.out.println(Collections.max(list));  // 5
         System.out.println(Collections.min(list));  // 1
         Collections.reverse(list);              // [5,4,3,2,1]
-        Collections.copy(list1,list);           //
+        Collections.copy(list1,list);
         Collections.swap(list,0,4);        // [1,4,3,2,5]
         Collections.sort(list);                 // [1,2,3,4,5]
         Collections.shuffle(list);              // 随机排列

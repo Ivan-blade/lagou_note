@@ -275,6 +275,39 @@
 
   
 
+#### setAccessible
+
+ + 用于接触访问限制在对方法和变量都有效（method和field）
+
++ demo
+
+  ```java
+  public class Test {
+  
+      public static void main(String[] args) throws Exception {
+  
+          Class c1 = Class.forName("com.Ivan.test.Person");
+          Constructor constructor = c1.getConstructor(int.class,String.class);
+          Object luna = constructor.newInstance(16, "luna");
+          
+          Method getAge = c1.getDeclaredMethod("getAge"); // 私有化方法getAge
+          getAge.setAccessible(true);
+          Object invoke = getAge.invoke(luna);
+          System.out.println(invoke);     // 16
+          
+          Field field = c1.getDeclaredField("name");
+          field.setAccessible(true);
+          field.set(luna,"sakura");
+          System.out.println(field.get(luna));    // sakura
+  
+  
+      }
+  }
+  
+  ```
+
+  
+
 #### 获取成员方法的两种形式
 
 + demo

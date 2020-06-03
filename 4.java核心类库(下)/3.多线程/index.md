@@ -267,13 +267,12 @@
               e.printStackTrace();
           }
           b1 = false;
-          // 线程停止，已经过时了不建议使用 th.stop();
       }
   }
   
   ```
-
   
+
 
 #### 线程优先级的管理
 
@@ -765,10 +764,7 @@
   ```java
   @Override
       public /*synchronized */void run() {
-          // synchronize
-          //synchronized(demo) {
-          // 直接使用this包含整个代码块，有源码可知调用run方法的是Thread实例化对象，能不能锁住取决于是不是同一个对象，注意方法上加synchronize关键字和synchronized（this）作用是一样的
-          
+          test();
       }
   
   	public static /*synchronized*/ test() {

@@ -26,7 +26,7 @@
   +  Lambda表达式是实例化函数式接口的重要方式，使用Lambda表达式可以是代码变的更加简洁紧凑
 
   + Lambda表达式：参数列表，箭头符号 -> 和方法体组成，而方法体可以是表达式也可以是语句块
-  + 语法格式：（参数列表） -> {方法体；} ——其中（），参数类型，{}，return关键字可以省略 
+  + 语法格式：（参数列表） -> {方法体；} —— 其中（），参数类型，{}，return关键字可以省略
 
 #### 匿名内部类实现函数式接口
 
@@ -230,7 +230,7 @@
           /*Function<Integer,Person[]> function1 = new Function<Integer, Person[]>() {
               @Override
               public Person[] apply(Integer integer) {
-                  return new Person[integer];
+                  return new Person(integer);
               }
           };
           Person[] apply = function1.apply(3);
@@ -742,7 +742,7 @@
           } finally {
               if(null != inputStream) {
                   try {
-                      inputStream.close();
+                      inputStream.close();vdsgg,
                   } catch (IOException e) {
                       e.printStackTrace();
                   }
