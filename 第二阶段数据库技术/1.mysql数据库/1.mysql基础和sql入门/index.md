@@ -220,6 +220,8 @@
 */
 CREATE DATABASE db1;
 
+-- 创建如果不存在则数据库
+CREATE DATABASE IF NOT EXISTS db1;
 /*
   创建数据库，指定utf-8编码
 */
@@ -497,8 +499,115 @@ CREATE TABLE IF NOT EXISTS emp(
 	hire_date DATE,
 	dept_name VARCHAR(20)
 )
+-- 么得数据。。。走个形式
+
+/* 
+  DQL 
+      简单查询
+	select 列名 from 表名;
+*/
+
+-- 查询emp所有数据
+SELECT * FROM emp;  -- * 表示所有列
+
+-- 查询所有数据只显示id和name
+SELECT eid,ename FROM emp;
+
+-- 查询所有的数据，然后将列名改为中文
+SELECT * FROM emp;
+-- 别名查询使用关键字as
+SELECT 
+	eid AS '编号', 
+	ename AS '姓名'，
+	sex AS '性别',
+	salary AS '薪水',
+	hire_date '入职时间', -- as可以省略
+	dept_name '部门名称'
+FROM emp;
+
+-- 查询一共有几个部门
+SELECT dept_name FROM emp;
+
+-- 去重 distinct
+SELECT DISTINCT dept_name FROM emp;
+
+-- 将员工工资加1000进行展示
+SELECT ename,salary+1000 FROM emp;
 ```
 
 
 
 #### DQL——条件查询
+
+```mysql
+/*
+	条件表达式
+	语法格式： select 列名 from 表名 where 调教表达式;
+	
+	比较运算符
+	> < <= >= = <> !=
+	BETWEEN ...AND...
+	IN(集合)
+	LIKE
+	IS NULL
+	
+	逻辑运算符
+	AND
+	OR
+	NOT
+*/
+
+INSERT INTO emp VALUES(1,'孙悟空','男',7200,'2013-02-04','教学部'); 
+INSERT INTO emp VALUES(2,'猪八戒','男',3600,'2010-12-02','教学部'); 
+INSERT INTO emp VALUES(3,'唐僧','男',9000,'2008-08-08','教学部');
+INSERT INTO emp VALUES(4,'白骨精','女',5000,'2015-10-07','市场部'); 
+INSERT INTO emp VALUES(5,'蜘蛛精','女',5000,'2011-03-14','市场部'); 
+INSERT INTO emp VALUES(6,'玉兔精','女',200,'2000-03-14','市场部'); 
+INSERT INTO emp VALUES(7,'林黛玉','女',10000,'2019-10-07','财务部'); 
+INSERT INTO emp VALUES(8,'黄蓉','女',3500,'2011-09-14','财务部'); 
+INSERT INTO emp VALUES(9,'吴承恩','男',20000,'2000-03-14',NULL); 
+INSERT INTO emp VALUES(10,'孙悟饭','男', 10,'2020-03-14',财务部);
+INSERT INTO emp VALUES(11,'兔八哥','女', 300,'2010-03-14',财务部);
+
+# 查询员工姓名为黄蓉的员工信息
+SELECT * FROM emp WHERE ename = '黄蓉';
+
+# 查询薪水价格为5000的员工信息
+SELECT * FROM emp WHERE salary = 5000;
+
+# 查询薪水价格不是5000的所有员工信息
+SELECT * FROM emp WHERE salary != 5000;
+SELECT * FROM emp WHERE salary <> 5000;
+
+# 查询薪水价格大于6000元的所有员工信息
+SELECT * fromemp WHERE salary > 6000;
+
+# 查询薪水价格在5000到10000之间所有员工信息
+SELECT * FROM emp WHERE salary > 5000 AND salary < 10000;
+SELECT * FROM em WHERE salary BETWEEN 5000 AND 10000;
+
+# 查询薪水价格是3600或7200或者20000的所有员工信息
+SELECT * FROM emp WHERE salary = 3600 OR salary = 7200 OR salary = 20000;
+-- 方式2 使用 in() 匹配括号中的参数
+SELECT * FROM emp WHERE salary IN (3600,7200,20000);
+
+/*
+	like '_精'
+		% 通配符 ,表示匹配任意多个字符串
+		_ 通配符 ,表示匹配一个字符
+*/
+
+# 查询含有'精'字的所有员工信息
+SELECT * FROM emp WHERE ename LIKE '%精%';
+# 查询以'孙'开头的所有员工信息
+SELECT * FROM emp WHERE ename LIKE '孙%';
+# 查询第二个字为'兔'的所有员工信息
+SELECT * FROM emp WHERE ename LIKE '_兔%';
+# 查询没有部门的员工信息
+-- 错误方式 select * from where dept_name = null;
+SELECT * FROM emp WHERE dept_name IS NULL;
+# 查询有部门的员工信息
+SELECT * FROM emp WHERE dept_name IS NOT NULL;
+
+```
+
