@@ -470,6 +470,7 @@ SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;
 + 脏读是指一个事务读到了另一个事务没有提交的数据
 
   ```mysql
+  -- tom，jack初始1000
   -- tom账户 -500元 
   UPDATE account SET money = money - 500 WHERE NAME = 'tom';
   -- jack账户 + 500元 
@@ -478,8 +479,45 @@ SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;
   -- 客户端A进行以上操作但是还没有commit，此时如果隔离权限较低，客户端b使用select语句可以在commit之前查询到修改后的数据，如果上述事务在commit前取消，b获取的就是错误的数据
   ```
 
-  
++ 解决方式开启read uncommitted模式
 
 #### 不可重复读演示及解决
 
++ 不可重复读： 同一个事务中进行查询操作但是每次读取的数据内容不一样
+
+  ```mysql
+  -- a窗口
+  start transaction;
+  select * from account where name = 'tom';  // 1000
+  
+  -- b窗口
+  start transaction;
+  -- tom账户 -500元 
+  UPDATE account SET money = money - 500 WHERE NAME = 'tom';
+  commit;
+  
+  -- a窗口
+  select * from account where name = 'tom';  // 1500
+  -- 在a窗口中一次事务中查询到的结果不一致，影响还是比较大的，假如在一次事务中进行了金额查询和金额缴纳，但是结果不一致，后果可想而知
+  ```
+
++ 解决策略： 更改隔离权限为repeatable read;
+
 #### 幻读演示及解决
+
++ 幻读：select 某记录是否存在，不存在，准备插入此记录，但执行insert时发现此记录已经存在
+
+  ```mysql
+  -- a窗口
+  start transaction;
+  select * from account where id = 3; # 查询是否存在id等于3的记录，不存在则插入
+  -- b窗口
+  start transaction;
+  insert into account values(3,'lucy',1000);  # 在a查询完但是没有插入的同时b窗口发生了一次插入id为3
+  
+  -- a窗口
+  insert into account values(3,'luna',1000); # a窗口进行插入操作，但是操作失败，id为3的记录已经存在
+  ```
+
++ 解决策略：更改隔离权限为serializable，注意更改后，a窗口事务开启时，b窗口开启事务执行语句会进入等待状态知道a川南关口commit，所以serializable效率极低一般不用
+
