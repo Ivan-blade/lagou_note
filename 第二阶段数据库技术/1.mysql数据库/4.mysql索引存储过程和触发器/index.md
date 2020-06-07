@@ -61,7 +61,9 @@ CREATE UNIQUE INDEX ind_hobby ON demo01(hobby);
 		1.create语句
 		create index 索引名 on 表名(列名[长度])
 		2.修改表结构添加索引
-		alter table 表名 add index 索引名 （列名）
+		alter table 表名 add index 索引名(列名)
+		3.创建是添加
+		index 索引名(列名);
 */
 ALTER TABLE demo01 ADD INDEX ind_dname(dname);
 
@@ -210,12 +212,13 @@ INSERT INTO goods VALUES(3,'花茶',25);
 
 /*
 	创建存储过程
-	语法格式
+	语法格式1
 		delimiter $$   -- $$表示声明语句的结束符号自定义
 		create procedure 存储过程名称()	   -- 声明存储过程
 		begin 	-- 开始编写存储过程
 		  -- 要执行的sql
 		end $$ -- 存储过程结束
+	调用格式： call 存储过程名
 		
 */
 DELIMITER $$
@@ -223,23 +226,182 @@ CREATE PROCEDURE goods_proc()
 BEGIN 
 SELECT * FROM goods;	-- (这里可以看出自定义结束符的意义，如果不自定义整个过程到；就结束了)
 END $$
+
+-- 调用存储过程 查询goods表所有数据 
+call goods_proc;
+
+/*
+	存储过程创建方式2： 创建一个接收参数的存储过程
+	语法格式：
+		delimiter $$   -- $$表示声明语句的结束符号自定义
+		create procedure 存储过程名（in 参数名 参数类型）
+		begin 	-- 开始编写存储过程
+		  -- 要执行的sql
+		end $$ -- 存储过程结束
+*/
+
+DELIMITER $$  
+CREATE PROCEDURE goods_proc02(IN goods_id INT)  
+BEGIN           
+	DELETE FROM goods WHERE gid = goods_id ; 
+END $$ 
+
+# 调用
+# 删除 id为2的商品 
+CALL goods_proc02(2);
+
+/*
+
+	存储过程创建方式3 获取存储过程返回值
+	1.变量的赋值
+		SET @变量名 = 值
+	2.OUT 输出参数
+		OUT 变量名 数据类型
+*/
+
+-- 向订单表中插入一条数据，返回1，表示插入成功
+DELIMITER $$
+CREATE PROCEDURE orders_proc(IN o_oid INT, IN o_gid INT, IN o_price INT,OUT out_num INT)
+BEGIN
+	-- 执行插入操作
+	INSERT INTO orders VALUES(o_oif,o_gid,o_proce);
+	-- 设置out_num值为1
+	SET @out_num = 1;
+	-- 返回out_num
+	SELECT @out_num;
+END $$
+
+-- 调用存储过程 获取返回值
+CALL orders_proc(1,2,50,@out_num); 
 ```
 
 
 
 #### 触发器的介绍
 
++ 触发器是mysql提供给程序员和数据分析员来保证数据完整性的一种方法，它是与表事件相关的特殊存储过程，它的执行不是由程序调用，也不是手工启动，而是由事件来触发，比如当对一个表进行操作时（增删改）它就会执行
+  + 简单来说就是当执行一个sql时会自动触发其他sql语句
++ 触发器创建的四个要素
+  + 监视地点
+  + 监视事件
+  + 触发时间
+  + 触发事件
+
 #### 触发器的创建和使用
+
+```mysql
+/*
+	触发器语法格式
+		DELIMITER $$
+		-- 将Mysql的结束符号从 ; 改为 $,避免执行出现错误 
+		CREATE TRIGGER  Trigger_Name  -- 触发器名，在一个数据库中触发器名是唯一的 
+		BEFORE/after（insert/UPDATE/delete） -- 触发的时机 和 监视的事件 
+		ON table_Name           -- 触发器所在的表 
+		FOR EACH ROW        --  固定写法 叫做行触发器, 每一行受影响，触发事件都执行 
+		BEGIN               
+			-- begin和end之间写触发事件 
+		END $$   -- 结束标记
+*/
+
+# 需求: 在下订单的时候，对应的商品的库存量要相应的减少，卖出商品之后减少库存量。
+-- 1.修改结束标识 
+DELIMITER $ 
+-- 2.创建触发器 
+CREATE TRIGGER t1 
+-- 3.指定触发的时机,和要监听的表 
+AFTER INSERT ON orders 
+-- 4.行触发器 固定写法 
+FOR EACH ROW 
+-- 4.触发后具体要执行的事件 
+BEGIN    
+-- 订单+1 库存-1    
+	UPDATE goods SET num = num -1 WHERE gid = 1; 
+END$
+```
 
 #### DCL创建用户
 
++ DCL数据控制语言
+
++ mysql默认使用的是root用户，超级管理员，拥有全部的权限，除了root用户以外，我们还可以通过DCL语言来定义一些权限较小的用户，分配不同的权限来管理和维护数据库
+
+  ```mysql
+  /*
+  	DCL创建用户
+  	语法结构
+  		create user '用户名'@'主机名' identified by '密码';
+  */
+  
+  -- 创建admin1用户， 只能在localhost 这个服务器登录mysql服务器，密码为123456
+  CREATE USER 'admin'@'localhost' IDENTIFIED BY '123456';
+  
+  -- 创建admin2用户可以在任何一台电脑上登录mysql服务器，密码为123456
+  CREATE USER 'admin'@'%' IDENTIFIED BY '123456'   -- %表示任意电脑都能登录
+  ```
+
+  
+
 #### DCL用户授权
+
+```mysql
+/*
+	用户的授权
+	语法格式
+		grant 权限1，权限2，... on 数据库名.表 to '用户名'@'主机名'
+*/
+
+# 给 admin1 用户分配对 db4 数据库中 products 表的 操作权限：查询
+GRANT SELECT ON db4.products TO 'admin1'@'localhost';
+
+# 给 admin2 用户分配所有权限，对所有数据库的所有表
+GRANT ALL ON *.* TO 'admin2'@'%';
+
+```
+
+
 
 #### DCL查看用户权限
 
+```mysql
+/*
+	查看用户权限
+	语法格式
+		show grants for '用户名'@'主机名';
+*/
+
+-- 查看root用户的权限
+SHOW GRANTS FOR 'root'@'localahost';
+```
+
+
+
 #### DCL查询用户删除用户
+
+```mysql
+/*
+	删除用户
+	drop user '用户名'@'地址';
+	查询用户
+	select * from user；
+*/
+```
+
+
 
 #### 数据库备份SQLYOG方式
 
++ 右击
+
 #### 数据库备份命令行方式
+
+```mysql
+/*
+	mysql数据库备份
+	语法格式：
+		备份 mysqldump -u用户名 -p密码 数据库名 > 导出文件绝对路径(xxx.sql)
+		还原 source sql文件地址
+*/
+```
+
+
 

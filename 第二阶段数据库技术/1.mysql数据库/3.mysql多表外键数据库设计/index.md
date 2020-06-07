@@ -511,21 +511,23 @@ SELECT * FROM products WHERE category_id IN (SELECT cid FROM category WHERE cnam
     		+ 示例： 地址信息表中, contry这一列,还可以继续拆分,不符合第一范式
     		
     		    <img src="../../../images/database-1nf.png">
-    		
+    	
      + 第二范式(2nf) 在第一范式的基础上进一步满足更多的规范
-  
+    
          + 在第一范式的基础上更进一步，目标是确保表中的每列都和主键相关
-  
+      
          + 一张表只能描述一件事.
-  
-          <img src="../../../images/database-2nf.png">
-  
-     + 第三范式(3nf) 在第二范式的基础上满足更多的规范
-  
-         + 消除传递依赖
-  
-         + 表的信息，如果能够被推导出来，就不应该单独的设计一个字段来存放
-  
+      
+         
+     <img src="../../../images/database-2nf.png">
+      
+   + 第三范式(3nf) 在第二范式的基础上满足更多的规范
+      
+       + 消除传递依赖
+        
+       + 表的信息，如果能够被推导出来，就不应该单独的设计一个字段来存放
+        
+         
           <img src="../../../images/database-3nf.png">
 
 #### 数据库反三范式
